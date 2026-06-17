@@ -16,11 +16,23 @@ pipeline {
             }
         }
 
-        stage('Verify Docker Image') {
+        stage('Deploy Container') {
             steps {
-                sh 'docker images'
+                sh '''
+                docker rm -f release-container || true
+
+                docker run -d \
+                --name release-container \
+                -p 5000:5000 \
+                release-app:${BUILD_NUMBER}
+                '''
             }
         }
 
+        stage('Health Check') {
+            steps {
+                sh 'curl localhost:5000'
+            }
+        }
     }
 }
