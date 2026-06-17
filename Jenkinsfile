@@ -30,8 +30,11 @@ pipeline {
         }
 
         stage('Health Check') {
-            steps {
-                sh 'curl localhost:5000'
+    steps {
+        sh '''
+        sleep 10
+        curl localhost:5000
+        '''
             }
         }
     }
