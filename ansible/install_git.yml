@@ -1,0 +1,10 @@
+---
+- name: Install Git
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install Git Package
+      dnf:
+        name: git
+        state: present
